@@ -7,7 +7,7 @@ REQUEST_COUNT = Counter("request_count", "Total HTTP Requests")
 @app.route("/")
 def home():
     REQUEST_COUNT.inc()
-    return jsonify(message="Updated Flask DevOps App Running AND ACTIVE")
+    return jsonify(message="Flask DevOps App Running")
 
 @app.route("/predict")
 def predict():
