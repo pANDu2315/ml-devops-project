@@ -1,22 +1,18 @@
-from flask import Flask, jsonify
-from prometheus_client import Counter, generate_latest
+from flask import Flask, Response
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 
 app = Flask(__name__)
+
 REQUEST_COUNT = Counter("request_count", "Total HTTP Requests")
 
 @app.route("/")
 def home():
     REQUEST_COUNT.inc()
-    return jsonify(message="Flask DevOps App Running")
-
-@app.route("/predict")
-def predict():
-    REQUEST_COUNT.inc()
-    return jsonify(prediction=5)
+    return "ML DevOps App Running"
 
 @app.route("/metrics")
 def metrics():
-    return generate_latest()
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
